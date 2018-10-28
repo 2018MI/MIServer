@@ -4,7 +4,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.chengpx.framework.dao.BaseDao;
 import org.chengpx.util.dao.JdbcUtils;
-import org.chengpx.util.dao.TraQueryRunner;
 import org.chengpx.util.dao.query.Page;
 import org.chengpx.util.dao.query.QueryHelper;
 
@@ -22,10 +21,7 @@ public abstract class BaseDaoJdbcImpl implements BaseDao {
     protected QueryRunner mQueryRunner;
 
     public BaseDaoJdbcImpl() {
-        mJdbcUtils = JdbcUtils.getThreadInstance();
-        mQueryRunner = TraQueryRunner.getThreadInstance();
     }
-
 
     @Override
     public void flush() {
@@ -141,4 +137,13 @@ public abstract class BaseDaoJdbcImpl implements BaseDao {
     public long batchSave(List list) {
         return 0;
     }
+
+    public void setmJdbcUtils(JdbcUtils mJdbcUtils) {
+        this.mJdbcUtils = mJdbcUtils;
+    }
+
+    public void setmQueryRunner(QueryRunner mQueryRunner) {
+        this.mQueryRunner = mQueryRunner;
+    }
+
 }
