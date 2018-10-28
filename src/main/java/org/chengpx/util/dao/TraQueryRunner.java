@@ -4,7 +4,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,11 +19,10 @@ public class TraQueryRunner extends QueryRunner {
 
     private static final Logger S_LOGGER = LoggerFactory.getLogger(TraQueryRunner.class);
     private static final ThreadLocal<QueryRunner> S_TRA_QUERY_RUNNER_THREAD_LOCAL = new ThreadLocal<>();
-    @Autowired
-    private JdbcUtils jdbcUtils;
+    private JdbcUtils JDBC_UTILS;
 
     private TraQueryRunner() {
-        // jdbcUtils = JdbcUtils.getThreadInstance();
+        JDBC_UTILS = JdbcUtils.getThreadInstance();
     }
 
     public static QueryRunner getThreadInstance() {
@@ -47,7 +45,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public int[] batch(String sql, Object[][] params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -66,7 +64,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> T query(String sql, ResultSetHandler<T> rsh, Object... params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -84,7 +82,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> T query(String sql, ResultSetHandler<T> rsh) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -100,7 +98,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public int update(String sql) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -117,7 +115,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public int update(String sql, Object param) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -134,7 +132,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public int update(String sql, Object... params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -152,7 +150,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> T insert(String sql, ResultSetHandler<T> rsh) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -171,7 +169,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> T insert(String sql, ResultSetHandler<T> rsh, Object... params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -190,7 +188,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> T insertBatch(String sql, ResultSetHandler<T> rsh, Object[][] params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -207,7 +205,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public int execute(String sql, Object... params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
@@ -226,7 +224,7 @@ public class TraQueryRunner extends QueryRunner {
      */
     @Override
     public <T> List<T> execute(String sql, ResultSetHandler<T> rsh, Object... params) throws SQLException {
-        Connection connection = jdbcUtils.getTraConnection();
+        Connection connection = JDBC_UTILS.getTraConnection();
         if (connection == null) {
             throw new IllegalStateException("请开启事务");
         }
